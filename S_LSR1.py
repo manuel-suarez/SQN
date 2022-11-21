@@ -48,7 +48,7 @@ def S_LSR1(w_init,X,y,seed,numIter,mmr,radius,eps,eta,delta_init,epsTR,num_weigh
     objFunOld = sess.run(dnn.cross_entropy,feed_dict={dnn.x: X, dnn.y:y})    # Compute function value at current iterate
     numFunEval += 1
     
-    print objFunOld
+    print(objFunOld)
     
     # Method while loop (terminate after numIter or Accuracy 1 achieved)
     while 1:
