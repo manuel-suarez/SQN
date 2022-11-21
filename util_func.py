@@ -40,7 +40,7 @@ def CG_Steinhaug_matFree(epsTR, g , deltak, S,Y,nv):
 
 # for Hessfree
   L = np.zeros((Y.shape[1],Y.shape[1]))
-  for ii in xrange(Y.shape[1]):
+  for ii in range(Y.shape[1]):
      for jj in range(0,ii): 
             L[ii,jj] = S[:,ii].dot(Y[:,jj])
  
@@ -124,13 +124,13 @@ def L_BFGS_two_loop_recursion(g_k,S,Y,k,mmr,gamma_k,nv):
   
   theta = np.zeros((idx,1))
   q = g_k
-  for i in xrange(idx):
+  for i in range(idx):
     rho[idx-i-1] = 1/ S[:,idx-i-1].reshape(nv,1).T.dot(Y[:,idx-i-1].reshape(nv,1))
     theta[idx-i-1] =(rho[idx-i-1])*(S[:,idx-i-1].reshape(nv,1).T.dot(q))
     q = q - theta[idx-i-1]*Y[:,idx-i-1].reshape(nv,1)
     
   r = gamma_k*q
-  for j in xrange(idx):
+  for j in range(idx):
     beta = (rho[j])*(Y[:,j].reshape(nv,1).T.dot(r))
     r = r + S[:,j].reshape(nv,1)*(theta[j] - beta)
     

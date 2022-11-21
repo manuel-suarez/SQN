@@ -30,14 +30,14 @@ def getData(num_pts = 50, freq = 8.0, offset = 0.8):
     X = np.reshape(np.array(X),[2,-1]) 
 
     # Create labels Y
-    Y = [1 for _ in xrange(num_pts)]
-    Y = Y + [0 for _ in xrange(num_pts)]
+    Y = [1 for _ in range(num_pts)]
+    Y = Y + [0 for _ in range(num_pts)]
 
     ns = len(Y)
     Y = np.array(Y)
     X = np.transpose(X)
     y = np.zeros([ns,2])
-    for i in xrange(ns):
+    for i in range(ns):
         y[i,Y[i]] = 1
 
     return X,y   

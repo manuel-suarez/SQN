@@ -28,10 +28,10 @@ def sample_pairs_SY_SLSR1(X,y,num_weights,mmr,radius,eps,dnn,numHessEval,sess):
     Y = np.zeros((num_weights,0))
 
     counterSucc = 0
-    for idx in xrange(mmr):        
+    for idx in range(mmr):
 
       L = np.zeros((Y.shape[1],Y.shape[1]))
-      for ii in xrange(Y.shape[1]):
+      for ii in range(Y.shape[1]):
          for jj in range(0,ii): 
                 L[ii,jj] = S[:,ii].dot(Y[:,jj])
 
@@ -65,7 +65,7 @@ def sample_pairs_SY_SLBFGS(X,y,num_weights,mmr,radius,eps,dnn,numHessEval,sess):
     Y = np.zeros((num_weights,0))
     
     counterSucc = 0  
-    for idx in xrange(mmr):
+    for idx in range(mmr):
       sTy = Ytemp[:,idx].T.dot(Stemp[:,idx])
       if sTy > eps *(LA.norm(Stemp[:,idx])*LA.norm(Ytemp[:,idx])):
           gamma_k = np.squeeze((Stemp[:,idx]).T.dot(Ytemp[:,idx])/((Ytemp[:,idx]).T.dot(Ytemp[:,idx])))

@@ -81,7 +81,7 @@ def S_LSR1(w_init,X,y,seed,numIter,mmr,radius,eps,eta,delta_init,epsTR,num_weigh
         ared = objFunOld - objFunNew                     # Compute actual reduction             
 
         Lp = np.zeros((Y.shape[1],Y.shape[1]))
-        for ii in xrange(Y.shape[1]):
+        for ii in range(Y.shape[1]):
            for jj in range(0,ii): 
                   Lp[ii,jj] = S[:,ii].dot(Y[:,jj])
         tmpp = np.sum((S * Y),axis=0)
