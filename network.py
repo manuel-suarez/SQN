@@ -35,8 +35,8 @@ class DNN:
     methods."""
     def __init__(self,hiddenSizes,activation="sigmoid",mmr=10):
 
-        x = tf.placeholder(tf.float64, shape=[None, 2])
-        y_ = tf.placeholder(tf.float64, shape=[None, 2])
+        x = tf.compat.v1.placeholder(tf.float64, shape=[None, 2])
+        y_ = tf.compat.v1.placeholder(tf.float64, shape=[None, 2])
 
         FC1 = hiddenSizes[0]
         FC2 = hiddenSizes[1]
@@ -108,13 +108,13 @@ class DNN:
         self.correct_prediction = correct_prediction
         self.params = params
         
-        self.updateVal = tf.placeholder(tf.float64, shape=[int(params.shape[0]),1])      # Placeholder for updating parameters 
+        self.updateVal = tf.compat.v1.placeholder(tf.float64, shape=[int(params.shape[0]),1])      # Placeholder for updating parameters
         self.updateOp = tf.assign_add(params, self.updateVal).op                         # Operator for updating parameters  
         self.G = tf.gradients(cross_entropy,params)                                      # Gradient computation
         self.H = tf.hessians(cross_entropy,params)                                       # Hessian computation
         self.ASSIGN_OP = tf.assign(self.params, self.updateVal).op                       # Operator for assigning parameters
         Gradient = self.G[0]
-        self.vecs = tf.placeholder(dtype=tf.float64, shape=[int(self.params.shape[0]), mmr])  #Placeholder for the matrix
+        self.vecs = tf.compat.v1.placeholder(dtype=tf.float64, shape=[int(self.params.shape[0]), mmr])  #Placeholder for the matrix
         self.Gv = tf.reshape(Gradient,shape=(1,-1))
         self.grad_vs =(tf.matmul(self.Gv,self.vecs))
         self.Hvs = tf.stack([tf.gradients(tm[0], params, stop_gradients=self.vecs) for tm in tf.unstack(self.grad_vs, axis=1) ] )   # Operator for Hessian-matrix product 
