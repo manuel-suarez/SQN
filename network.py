@@ -20,7 +20,7 @@ import time
 tf.compat.v1.disable_eager_execution()
 # ==========================================================================
 def weight_variable(shape, std=0.1):
-    initial = tf.truncated_normal(shape, stddev=std, dtype=tf.float64)
+    initial = tf.compat.v1.truncated_normal(shape, stddev=std, dtype=tf.float64)
     return tf.Variable(initial,dtype=tf.float64)
 
 
