@@ -63,7 +63,7 @@ def S_LBFGS(w_init,X,y,seed,numIter,mmr,radius,eps,alpha_init,cArmijo,rhoArmijo,
         HISTORY.append([k, objFunOld,acc,norm_g, numFunEval,numGradEval,numHessEval, numFunEval+numGradEval+numHessEval,
                         time.time()-st,alpha])
         
-        print HISTORY[k]                                   # Print History array
+        print(HISTORY[k])                                   # Print History array
         
         if k > numIter or acc ==1:                         # Terminate if number of iterations > numIter or Accuracy = 1
             break
@@ -89,7 +89,7 @@ def S_LBFGS(w_init,X,y,seed,numIter,mmr,radius,eps,alpha_init,cArmijo,rhoArmijo,
             sess.run(dnn.ASSIGN_OP, feed_dict={dnn.updateVal: x0})
             alpha = alpha * rhoArmijo
             if alpha < 1e-25:
-              print "issue with Armijo"
+              print("issue with Armijo")
               break
           else:
             break
