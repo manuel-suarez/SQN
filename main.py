@@ -45,7 +45,7 @@ X,y = getData(cp.num_pts,cp.freq,cp.offset)
 
 # Create network
 os.environ["CUDA_VISIBLE_DEVICES"] = cp.GPUnumber 
-sess = tf.InteractiveSession()
+sess = tf.compat.v1.InteractiveSession()
 dnn = DNN(cp.sizeNet,cp.activation,cp.mmr)
 
 # Set the initial point
