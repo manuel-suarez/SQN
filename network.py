@@ -113,7 +113,7 @@ class DNN:
         self.updateOp = tf.compat.v1.assign_add(params, self.updateVal).op                         # Operator for updating parameters
         self.G = tf.gradients(cross_entropy,params)                                      # Gradient computation
         self.H = tf.hessians(cross_entropy,params)                                       # Hessian computation
-        self.ASSIGN_OP = tf.assign(self.params, self.updateVal).op                       # Operator for assigning parameters
+        self.ASSIGN_OP = tf.compat.v1.assign(self.params, self.updateVal).op                       # Operator for assigning parameters
         Gradient = self.G[0]
         self.vecs = tf.compat.v1.placeholder(dtype=tf.float64, shape=[int(self.params.shape[0]), mmr])  #Placeholder for the matrix
         self.Gv = tf.reshape(Gradient,shape=(1,-1))
