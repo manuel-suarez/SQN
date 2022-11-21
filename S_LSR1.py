@@ -64,7 +64,7 @@ def S_LSR1(w_init,X,y,seed,numIter,mmr,radius,eps,eta,delta_init,epsTR,num_weigh
         # Append to History array
         HISTORY.append([k, objFunOld,acc,norm_g,numFunEval,numGradEval,numHessEval,numFunEval+numGradEval+numHessEval,
                         counterSucc,time.time()-st,deltak])
-        print HISTORY[k]                                   # Print History array
+        print(HISTORY[k])                                   # Print History array
         
         if k > numIter or acc ==1:                         # Terminate if number of iterations > numIter or Accuracy = 1
             break
