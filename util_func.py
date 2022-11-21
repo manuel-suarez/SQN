@@ -101,14 +101,14 @@ def rootFinder(a,b,c):
       if x>=0:
         return x
       else:
-        print "no positive root!"
+        print("no positive root!")
   elif r == 0:
       num_roots = 1
       x = (-b) / (2*a+0.0)
       if x>=0:
         return x
       else:
-        print "no positive root!"
+        print("no positive root!")
   else:
       print("No roots")
 
