@@ -17,6 +17,7 @@ import tensorflow as tf
 import numpy as np
 import time
 
+tf.compat.v1.disable_eager_execution()
 # ==========================================================================
 def weight_variable(shape, std=0.1):
     initial = tf.truncated_normal(shape, stddev=std, dtype=tf.float64)
