@@ -27,8 +27,29 @@ from sampleSY import *
 
 
 # ==========================================================================
-def S_LSR1(w_init, X, y, seed, numIter, mmr, radius, eps, eta, delta_init, epsTR, num_weights, dnn, sess):
-    """Sampled LSR1 method."""
+def MB_LSR1(w_init, X, y, seed, numIter,
+              # Parámetros de la implementación actual
+              mmr, radius, eps, eta, epsTR,
+              # Parámetros específicos del método del artículo
+              m,                    # memory
+              m_hat,                # restart memory m^ <= m
+              n_init,               # initial batchsize n
+              delta_init,           # initial radious delta_0
+              tau,                  # restart tolerancy
+              K,                    # progress check frequency
+              lambda_1, lambda_2,   # progress threshold parameters
+              n_hat_k,              # progress check batch-size
+              zeta,                 # progress radious parameter \in [0, 1]
+              mu,                   # momentum
+              alpha_s,              # learning rate \in [0, 1]
+              # Parámetros de la red
+              num_weights, dnn, sess):
+    """
+        Algorithm 1: Stochastic SR1 Trust-region.
+        Griffin, et. al.
+        A minibatch stochastic Quasi-Newton method adapted for nonconvex deep learning problems
+        p. 5
+    """
 
     w = w_init
     sess.run(dnn.params.assign(w))  # Assign initial weights to parameters of the network
@@ -46,6 +67,7 @@ def S_LSR1(w_init, X, y, seed, numIter, mmr, radius, eps, eta, delta_init, epsTR
     k = 0  # Initialize iteration counter
     st = time.time()  # Start the timer
 
+    # Evaluación de la función de costo
     objFunOld = sess.run(dnn.cross_entropy, feed_dict={dnn.x: X, dnn.y: y})  # Compute function value at current iterate
     numFunEval += 1
 
@@ -53,6 +75,7 @@ def S_LSR1(w_init, X, y, seed, numIter, mmr, radius, eps, eta, delta_init, epsTR
 
     # Method while loop (terminate after numIter or Accuracy 1 achieved)
     while 1:
+        # Evaluación del gradiente y precisión
         gradTemp, acc, xOld = sess.run([dnn.G, dnn.accuracy, dnn.params],
                                        feed_dict={dnn.x: X, dnn.y: y})  # Compute gradient and accuracy
         gard_k = gradTemp[0]
