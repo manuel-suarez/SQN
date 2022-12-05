@@ -98,9 +98,11 @@ def MB_LSR1(w_init,X,y,seed,numIter,mmr,r_mmr,n,tau,K,gamma_1,gamma_2,zeta,mu,al
         numGradEval += 1
         norm_g = LA.norm(grad_k)
 
-        # Sample S, Y pairs
+        # Instead of S, Y sampling of S_LSR1 method we calculate and store S, Y curvature pairs according to it's normal
+        # definition given by Nocedal, Wright (2006): (sk = xk+1 - xk, yk = gk+1 - gk) using mmr num of pairs (memory)
         S, Y, counterSucc, numHessEval = sample_pairs_SY_SLSR1(X, y, num_weights, mmr, radius, eps, dnn, numHessEval,
                                                                sess)
+        print(S.shape, Y.shape)
 
         # Append to History array
         HISTORY.append(
