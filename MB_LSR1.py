@@ -33,6 +33,20 @@ def MB_LSR1(w_init,X,y,seed,numIter,mmr,radius,eps,eta,delta_init,epsTR,num_weig
         Griffin, et. al.
         A minibatch stochastic Quasi-Newton method adapted for nonconvex deep learning problems
         p. 5
+        Parameters:
+            w_init:             Initial weights of the network (variable to optimize)
+            X,y:                Observations and labels of the data to classify
+            seed:               Random seeder
+            numIter:            Max. num. of iterations
+            mmr:                Memory size
+            radius:             Radius of the sampling region
+            eps:                Epsilon criterion to sample S,Y pairs
+            eta:                Trust region increase/reduce criterion
+            delta_init:         Initial radius of trust region
+            epsTR:              Epsilon criterion for trust region subproblem
+            num_weights:        Num. of weights of the network
+            dnn:                Network
+            sess:               Tensorflow interactive session
     """
 
     w = w_init

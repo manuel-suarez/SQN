@@ -32,6 +32,21 @@ def L_SSR1_TR(w_init,X,y,seed,numIter,mmr,radius,eps,eta,delta_init,epsTR,num_we
         Erway, et. al.,
         TRUST-REGION ALGORITHMS FOR TRAINING RESPONSES: MACHINE LEARNING METHODS USING INDEFINITE HESSIAN APPROXIMATIONS
         p. 10
+
+        Parameters:
+            w_init:             Initial weights of the network (variable to optimize)
+            X,y:                Observations and labels of the data to classify
+            seed:               Random seeder
+            numIter:            Max. num. of iterations
+            mmr:                Memory size
+            radius:             Radius of the sampling region
+            eps:                Epsilon criterion to sample S,Y pairs
+            eta:                Trust region increase/reduce criterion
+            delta_init:         Initial radius of trust region
+            epsTR:              Epsilon criterion for trust region subproblem
+            num_weights:        Num. of weights of the network
+            dnn:                Network
+            sess:               Tensorflow interactive session
     """
     
     w = w_init
@@ -54,7 +69,13 @@ def L_SSR1_TR(w_init,X,y,seed,numIter,mmr,radius,eps,eta,delta_init,epsTR,num_we
     numFunEval += 1
     
     print(objFunOld)
-    
+
+    # According to Griffin, et. al., we sample in each iteration the S, Y curvature vectors, in L-SSR1-TR this
+    # vectors are builded from the progression of fun_xk, grad_xk
+    # We will have mmr total pair's {si, yi}
+    S = []
+    Y = []
+
     # Method while loop (terminate after numIter or Accuracy 1 achieved)
     while 1:
         gradTemp, acc, xOld = sess.run([dnn.G,dnn.accuracy,dnn.params], 
@@ -63,7 +84,6 @@ def L_SSR1_TR(w_init,X,y,seed,numIter,mmr,radius,eps,eta,delta_init,epsTR,num_we
         numGradEval += 1
         norm_g = LA.norm(gard_k)
 
-        # Sample S, Y pairs
         S,Y,counterSucc,numHessEval = sample_pairs_SY_SLSR1(X,y,num_weights,mmr,radius,eps,dnn,numHessEval,sess)
 
         # Append to History array
