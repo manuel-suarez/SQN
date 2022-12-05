@@ -26,7 +26,7 @@ from data_generation import *
 from sampleSY import *
 
 # ==========================================================================
-def L_SSR1_TR(w_init,X,y,seed,numIter,mmr,radius,eps,eta,delta_init,epsTR,num_weights,dnn,sess):
+def L_SSR1_TR(w_init,X,y,seed,numIter,mmr,r_mmr,n,tau,K,gamma_1,gamma_2,zeta,mu,alpha_s,radius,eps,eta,delta_init,epsTR,num_weights,dnn,sess):
     """
         Algorithm 3: Limited-Memory Stochastic SR1 Trust-Region.
         Erway, et. al.,
@@ -39,6 +39,14 @@ def L_SSR1_TR(w_init,X,y,seed,numIter,mmr,radius,eps,eta,delta_init,epsTR,num_we
             seed:               Random seeder
             numIter:            Max. num. of iterations
             mmr:                Memory size
+            r_mmr:              Restart memory size r_mmr <= m
+            n:                  Initial batch size
+            tau:                Restart tolerance
+            K:                  Progress check frequency
+            gamma_1, gamma2:    Progress threshold parameters
+            zeta:               Progressive radius parameter [0, 1]
+            mu:                 Momentum
+            alpha_s:            Learning rate [0, 1]
             radius:             Radius of the sampling region
             eps:                Epsilon criterion to sample S,Y pairs
             eta:                Trust region increase/reduce criterion

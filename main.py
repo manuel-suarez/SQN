@@ -39,8 +39,8 @@ def main(opt=input1):
         MB_LSR1(w_init, X, y, cp.seed, cp.numIter, cp.mmr, cp.r_mmr, cp.n, cp.tau, cp.K, cp.gamma_1, cp.gamma_2,
                 cp.zeta, cp.mu, cp.alpha_s, cp.radius, cp.eps, cp.eta, cp.delta_init, cp.epsTR, cp.num_weights, dnn, sess)
     elif opt == "LSSR1":
-        L_SSR1_TR(w_init, X, y, cp.seed, cp.numIter, cp.mmr, cp.radius, cp.eps, cp.eta, cp.delta_init, cp.epsTR,
-               cp.num_weights, dnn, sess)
+        L_SSR1_TR(w_init, X, y, cp.seed, cp.numIter, cp.mmr, cp.r_mmr, cp.n, cp.tau, cp.K, cp.gamma_1, cp.gamma_2,
+                cp.zeta, cp.mu, cp.alpha_s, cp.radius, cp.eps, cp.eta, cp.delta_init, cp.epsTR, cp.num_weights, dnn, sess)
     elif opt == "SLBFGS":
         S_LBFGS(w_init,X,y,cp.seed,cp.numIter,cp.mmr,
                 cp.radius,cp.eps,cp.alpha_init,cp.cArmijo,cp.rhoArmijo,cp.num_weights,cp.init_sampling_SLBFGS,dnn,sess)
