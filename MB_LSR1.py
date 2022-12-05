@@ -94,9 +94,9 @@ def MB_LSR1(w_init,X,y,seed,numIter,mmr,r_mmr,n,tau,K,gamma_1,gamma_2,zeta,mu,al
         # Evaluación del gradiente y precisión
         gradTemp, acc, xOld = sess.run([dnn.G, dnn.accuracy, dnn.params],
                                        feed_dict={dnn.x: X, dnn.y: y})  # Compute gradient and accuracy
-        gard_k = gradTemp[0]
+        grad_k = gradTemp[0]
         numGradEval += 1
-        norm_g = LA.norm(gard_k)
+        norm_g = LA.norm(grad_k)
 
         # Sample S, Y pairs
         S, Y, counterSucc, numHessEval = sample_pairs_SY_SLSR1(X, y, num_weights, mmr, radius, eps, dnn, numHessEval,
@@ -113,7 +113,7 @@ def MB_LSR1(w_init,X,y,seed,numIter,mmr,r_mmr,n,tau,K,gamma_1,gamma_2,zeta,mu,al
 
         weights_SLSR1.append(sess.run(dnn.params))  # Append weights
 
-        sk_TR = CG_Steinhaug_matFree(epsTR, gard_k, deltak, S, Y, num_weights)  # Compute step using CG Steinhaug
+        sk_TR = CG_Steinhaug_matFree(epsTR, grad_k, deltak, S, Y, num_weights)  # Compute step using CG Steinhaug
         sess.run(dnn.ASSIGN_OP, feed_dict={dnn.updateVal: xOld + sk_TR})  # Assign new weights
 
         objFunNew = sess.run(dnn.cross_entropy, feed_dict={dnn.x: X, dnn.y: y})  # Compute new function value
@@ -132,7 +132,7 @@ def MB_LSR1(w_init,X,y,seed,numIter,mmr,r_mmr,n,tau,K,gamma_1,gamma_2,zeta,mu,al
         tmpp1 = np.matmul(Y.T, sk_TR)
         tmpp2 = np.matmul(Minvp, tmpp1)
         Bk_skTR = np.matmul(Y, tmpp2)
-        pred = -(gard_k.T.dot(sk_TR) + 0.5 * sk_TR.T.dot(Bk_skTR))  # Compute predicted reduction
+        pred = -(grad_k.T.dot(sk_TR) + 0.5 * sk_TR.T.dot(Bk_skTR))  # Compute predicted reduction
 
         # Take step
         if ared / pred > eta:
