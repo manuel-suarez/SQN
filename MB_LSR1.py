@@ -27,18 +27,26 @@ from sampleSY import *
 
 
 # ==========================================================================
-def MB_LSR1(w_init,X,y,seed,numIter,mmr,radius,eps,eta,delta_init,epsTR,num_weights,dnn,sess):
+def MB_LSR1(w_init,X,y,seed,numIter,mmr,r_mmr,n,tau,K,gamma_1,gamma_2,zeta,mu,alpha_s,radius,eps,eta,delta_init,epsTR,num_weights,dnn,sess):
     """
         Algorithm 1: Stochastic SR1 Trust-region.
         Griffin, et. al.
         A minibatch stochastic Quasi-Newton method adapted for nonconvex deep learning problems
         p. 5
-        Parameters:
+        Parameters (MB-LSR1 input definition, Line 1, 2):
             w_init:             Initial weights of the network (variable to optimize)
             X,y:                Observations and labels of the data to classify
             seed:               Random seeder
             numIter:            Max. num. of iterations
             mmr:                Memory size
+            r_mmr:              Restart memory size r_mmr <= m
+            n:                  Initial batch size
+            tau:                Restart tolerance
+            K:                  Progress check frequency
+            gamma_1, gamma2:    Progress threshold parameters
+            zeta:               Progressive radius parameter [0, 1]
+            mu:                 Momentum
+            alpha_s:            Learning rate [0, 1]
             radius:             Radius of the sampling region
             eps:                Epsilon criterion to sample S,Y pairs
             eta:                Trust region increase/reduce criterion
@@ -48,6 +56,15 @@ def MB_LSR1(w_init,X,y,seed,numIter,mmr,radius,eps,eta,delta_init,epsTR,num_weig
             dnn:                Network
             sess:               Tensorflow interactive session
     """
+
+    # MB-LSR1 Parameters initialization (Line 3)
+    T = 0
+    rho = 0
+    ms = 0
+    my = 0
+    mv = 0
+    S = []
+    Y = []
 
     w = w_init
     sess.run(dnn.params.assign(w))  # Assign initial weights to parameters of the network
@@ -72,6 +89,7 @@ def MB_LSR1(w_init,X,y,seed,numIter,mmr,radius,eps,eta,delta_init,epsTR,num_weig
     print(objFunOld)
 
     # Method while loop (terminate after numIter or Accuracy 1 achieved)
+    # MB-LSR1 Line 4
     while 1:
         # Evaluación del gradiente y precisión
         gradTemp, acc, xOld = sess.run([dnn.G, dnn.accuracy, dnn.params],
