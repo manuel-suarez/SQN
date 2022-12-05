@@ -44,7 +44,8 @@ def main(opt=input1):
     elif opt == "SLBFGS":
         S_LBFGS(w_init,X,y,cp.seed,cp.numIter,cp.mmr,
                 cp.radius,cp.eps,cp.alpha_init,cp.cArmijo,cp.rhoArmijo,cp.num_weights,cp.init_sampling_SLBFGS,dnn,sess)
-
+    else:
+        print(f"Error, \"{opt}\" method not supported")
        
 # Get the parameters
 cp = parameters()
