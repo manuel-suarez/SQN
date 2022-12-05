@@ -65,6 +65,15 @@ class parameters :
         self.seed = 67            # random seed
         self.numIter = 1000       # maximum number of iterations
         self.mmr = 10             # memory length for S-LSR1, S-LBFGS
+        self.r_mmr = 5            # restart memory size for MB-LSR1
+        self.n = 10               # initial batch size
+        self.tau = 1e-5           # restart tolerance
+        self.K = 10               # progress check frequency
+        self.gamma_1 = 1e-5       # progress threshold 1
+        self.gamma_2 = 1e-5       # progress threshold 2
+        self.zeta = 1e-3          # progressive radius parameter[0, 1]
+        self.mu = 1               # momentum
+        self.alpha_s = 0.5        # learning rate[0, 1]
         self.radius = 1           # sampling radius for S-LSR1, S-LBFGS
         self.eps = 1e-8           # tolerance for updating quasi-Newton matrices
         self.eta = 1e-6           # tolerance for ared/pred reduction in TR
