@@ -20,14 +20,12 @@ import tensorflow as tf
 
 def sample_pairs_SY_SLSR1(X,y,num_weights,mmr,radius,eps,dnn,numHessEval,sess):
     """ Function that computes SY pairs for S-LSR1 method"""
-    print("Sampling pairs S,Y")
 
     Stemp = radius*np.random.randn(num_weights,mmr)
     Ytemp = np.squeeze(sess.run([dnn.Hvs], feed_dict={dnn.x: X, dnn.y:y, dnn.vecs: Stemp})).T
     numHessEval += 1
     S = np.zeros((num_weights,0))
     Y = np.zeros((num_weights,0))
-    print("Initial shapes: ", S.shape, Y.shape)
 
     counterSucc = 0
     for idx in range(mmr):
@@ -53,9 +51,7 @@ def sample_pairs_SY_SLSR1(X,y,num_weights,mmr,radius,eps,dnn,numHessEval,sess):
 
         S = np.append(S,Stemp[:,idx].reshape(num_weights,1),axis = 1)
         Y = np.append(Y,Ytemp[:,idx].reshape(num_weights,1),axis=1)
-        print(f"{idx} shapes: ", S.shape, Y.shape)
 
-    print("Final shapes: ", S.shape, Y.shape)
     return S,Y,counterSucc,numHessEval
 
 def sample_pairs_SY_SLBFGS(X,y,num_weights,mmr,radius,eps,dnn,numHessEval,sess):
