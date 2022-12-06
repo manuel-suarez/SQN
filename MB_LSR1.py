@@ -100,14 +100,12 @@ def MB_LSR1(w_init,X,y,seed,numIter,mmr,r_mmr,n,tau,K,gamma_1,gamma_2,zeta,mu,al
 
         # Instead of S, Y sampling of S_LSR1 method we calculate and store S, Y curvature pairs according to it's normal
         # definition given by Nocedal, Wright (2006): (sk = xk+1 - xk, yk = gk+1 - gk) using mmr num of pairs (memory)
-        S, Y, counterSucc, numHessEval = sample_pairs_SY_SLSR1(X, y, num_weights, mmr, radius, eps, dnn, numHessEval,
-                                                               sess)
-        print(S.shape, Y.shape)
+        # S, Y, counterSucc, numHessEval = sample_pairs_SY_SLSR1(X, y, num_weights, mmr, radius, eps, dnn, numHessEval, sess)
 
         # Append to History array
         HISTORY.append(
             [k, objFunOld, acc, norm_g, numFunEval, numGradEval, numHessEval, numFunEval + numGradEval + numHessEval,
-             counterSucc, time.time() - st, deltak])
+             time.time() - st, deltak])
         print(HISTORY[k])  # Print History array
 
         if k > numIter or acc == 1:  # Terminate if number of iterations > numIter or Accuracy = 1
